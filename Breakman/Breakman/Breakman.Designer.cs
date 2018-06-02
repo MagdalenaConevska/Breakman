@@ -34,9 +34,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Name = "Breakman";
             this.Text = "Breakman";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Breakman_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Breakman_KeyDown);
             this.ResumeLayout(false);
 
         }
