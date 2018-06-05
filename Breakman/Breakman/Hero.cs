@@ -25,7 +25,11 @@
 
         public void Paint(Graphics g)
         {
-            g.Clear(Color.White);
+            Rectangle heroPath = new Rectangle(0, Y, (int)g.ClipBounds.Width, (int)g.ClipBounds.Height);
+
+            Brush brushClear = new SolidBrush(Color.White);
+
+            g.FillRectangle(brushClear, heroPath);
 
             Rectangle rectangle = new Rectangle(X, Y, Width, Height);
 
@@ -34,6 +38,7 @@
             g.FillRectangle(brush, rectangle);
 
             brush.Dispose();
+            brushClear.Dispose();
         }
 
         public void Move(int formWidth, Direction direction)
