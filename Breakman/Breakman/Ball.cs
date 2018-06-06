@@ -20,20 +20,22 @@
 
         private float velocityX;
         private float velocityY;
+        private Hero Hero;
 
-        public Ball(int x = 400, int y = 460)
+        public Ball(Hero hero, int x = 400, int y = 460)
         {
             X = x;
             Y = y;
             R = 20;
             Angle = Math.PI / 4;
+            Hero = hero;
             Velocity = 20;
             velocityX = (float)Math.Cos(Angle) * Velocity;
             velocityY = (float)Math.Sin(Angle) * Velocity;
         }
 
-        public void Move(int formWidth, int formHeight, Hero hero,
-                         List<BrickBase> bricks, Graphics g, Timer timer)
+        public List<BrickBase> Move(int formWidth, int formHeight, Hero hero,
+                                    List<BrickBase> bricks, Graphics g, Timer timer)
         {
             float nextX = X + velocityX;
             float nextY = Y + velocityY;
@@ -53,15 +55,17 @@
                 DialogResult gameOver = MessageBox.Show("Game over", "", MessageBoxButtons.OKCancel);
             }
 
-            RemoveTouchedBricks(g, bricks, nextX, nextY);
+            List<BrickBase> removedBricks = RemoveTouchedBricks(g, bricks, nextX, nextY);
 
             X += (int)velocityX;
             Y += (int)velocityY;
+
+            return removedBricks;
         }
 
-        private void RemoveTouchedBricks(Graphics g, List<BrickBase> bricks, float nextX, float nextY)
+        private List<BrickBase> RemoveTouchedBricks(Graphics g, List<BrickBase> bricks, float nextX, float nextY)
         {
-            List<BrickBase> touchedBricks = GetTouchedBricksByTheBall(bricks, nextX, nextY);
+            List<BrickBase> touchedBricks = GetBricksTouchedByTheBall(bricks, nextX, nextY);
 
             if (touchedBricks.Any())
             {
@@ -74,9 +78,11 @@
 
                 velocityY = -velocityY;
             }
+
+            return touchedBricks;
         }
 
-        private List<BrickBase> GetTouchedBricksByTheBall(List<BrickBase> bricks, float nextX, float nextY)
+        private List<BrickBase> GetBricksTouchedByTheBall(List<BrickBase> bricks, float nextX, float nextY)
         {
             return bricks.Where(f => (f.Y + f.Height) >= nextY && nextX >= f.X && nextX <= f.X + f.Width).ToList();
         }

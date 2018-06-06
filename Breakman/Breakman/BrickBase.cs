@@ -4,8 +4,8 @@
 
     public class BrickBase
     {
-        public const int BrickWidth = 100;
-        public const int BrickHeight = 25;
+        private const int BrickWidth = 100;
+        private const int BrickHeight = 25;
 
         public int X { get; set; }
 
