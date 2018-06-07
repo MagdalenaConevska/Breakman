@@ -1,5 +1,6 @@
 ﻿namespace Breakman
 {
+    using Properties;
     using System.Drawing;
 
     public class BrickBase
@@ -15,26 +16,24 @@
 
         public int Height { get; set; }
 
-        public Color Color { get; set; }
+        public Image BrickBackground { get; set; }
 
-        public BrickBase(int x, int y, Color color)
+        public BrickBase(int x, int y, Image brickBackground)
         {
             X = x;
             Y = y;
-            Color = color;
+            BrickBackground = brickBackground;
             Width = BrickWidth;
             Height = BrickHeight;
         }
 
-        public void Paint(Graphics g)
+        public virtual void Paint(Graphics g)
         {
             Rectangle rectangle = new Rectangle(X, Y, Width, Height);
 
-            Brush brush = new SolidBrush(Color);
+            Image redBrick = BrickBackground;
 
-            g.FillRectangle(brush, rectangle);
-
-            brush.Dispose();
+            g.DrawImage(redBrick, rectangle);
         }
 
         public void ClearBrick(Graphics g)

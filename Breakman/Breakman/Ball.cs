@@ -1,5 +1,6 @@
 ﻿namespace Breakman
 {
+    using Properties;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -109,11 +110,7 @@
 
         public void Paint(Graphics g)
         {
-            Brush brush = new SolidBrush(Color.CornflowerBlue);
-
-            g.FillEllipse(brush, X, Y, 2 * R, 2 * R);
-
-            brush.Dispose();
+            g.DrawImage(Resources.Ball, X, Y, 2 * R, 2 * R);
         }
 
         public void ClearBall(Graphics g)

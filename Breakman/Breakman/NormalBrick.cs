@@ -1,10 +1,10 @@
 ﻿namespace Breakman
 {
-    using System.Drawing;
+    using Properties;
 
     public class NormalBrick : BrickBase
     {
-        public NormalBrick(int x, int y) : base(x, y, Color.Chocolate)
+        public NormalBrick(int x, int y) : base(x, y, Resources.NormalBrick)
         {
 
         }

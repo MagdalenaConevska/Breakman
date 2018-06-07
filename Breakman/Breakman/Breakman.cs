@@ -10,7 +10,7 @@
         private const int BrickWidth = 100;
         private const int BrickHeight = 25;
         private const int BetweenBrickDistance = 3;
-        private int NumberOfRows = 3;
+        private int NumberOfRows = 5;
 
         public Hero Hero { get; set; }
         public Ball Ball { get; set; }

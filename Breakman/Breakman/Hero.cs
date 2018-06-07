@@ -1,5 +1,6 @@
 ﻿namespace Breakman
 {
+    using Properties;
     using System.Drawing;
 
     public class Hero
@@ -27,6 +28,8 @@
         {
             Rectangle heroPath = new Rectangle(0, Y, (int)g.ClipBounds.Width, (int)g.ClipBounds.Height);
 
+            Image heroBackground = Resources.Hero;
+
             Brush brushClear = new SolidBrush(Color.White);
 
             g.FillRectangle(brushClear, heroPath);
@@ -35,7 +38,7 @@
 
             Brush brush = new SolidBrush(Color.Blue);
 
-            g.FillRectangle(brush, rectangle);
+            g.DrawImage(heroBackground, rectangle);
 
             brush.Dispose();
             brushClear.Dispose();

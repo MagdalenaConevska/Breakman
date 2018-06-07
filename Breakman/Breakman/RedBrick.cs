@@ -1,10 +1,10 @@
 ﻿namespace Breakman
 {
-    using System.Drawing;
+    using Properties;
 
     public class RedBrick : BrickBase
     {
-        public RedBrick(int x, int y) : base(x, y, Color.Red)
+        public RedBrick(int x, int y) : base(x, y, Resources.RedBrick)
         {
 
         }
