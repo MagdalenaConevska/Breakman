@@ -16,6 +16,7 @@
         public Ball Ball { get; set; }
         public List<BrickBase> Bricks { get; set; }
         public KillingObject KillingObject { get; set; }
+        public SpeedingObject SpeedingObject { get; set; }
 
         private Timer BallTimer { get; set; }
         private Timer FallingObjectsTimer { get; set; }
@@ -50,32 +51,74 @@
             Graphics g = CreateGraphics();
 
             HandleKillingObjectMovement(g);
+
+            HandleSppedingObjectMovement(g);
+        }
+
+        private void HandleSppedingObjectMovement(Graphics g)
+        {
+            if (SpeedingObject == null)
+            {
+                return;
+            }
+
+            SpeedingObject.Clear();
+
+            SpeedingObject.Move();
+
+            if (Hero.Y <= SpeedingObject.Y + SpeedingObject.Height && SpeedingObject.X + SpeedingObject.Width / 2 >= Hero.X && SpeedingObject.X <= Hero.X + Hero.Width)
+            {
+                SpeedingObject.Y -= (int)SpeedingObject.Velocity;
+
+                SpeedingObject.Paint();
+
+                Hero.Velocity += 10;
+
+                SpeedingObject.Clear();
+
+                SpeedingObject = null; //Refactor this as extension method named Invalidate() on FallingObject as base.
+            }
+            else
+            {
+                SpeedingObject.Paint();
+
+                if (SpeedingObject.Y + SpeedingObject.Height >= Height)
+                {
+                    SpeedingObject.Clear();
+
+                    SpeedingObject = null;
+                }
+            }
         }
 
         private void HandleKillingObjectMovement(Graphics g)
         {
-            if (KillingObject != null)
+            if (KillingObject == null)
             {
-                KillingObject.Clear();
+                return;
+            }
 
-                KillingObject.Move();
+            KillingObject.Clear();
 
-                if (Hero.Y <= KillingObject.Y + KillingObject.Height && KillingObject.X + KillingObject.Width / 2 >= Hero.X && KillingObject.X <= Hero.X + Hero.Width)
+            KillingObject.Move();
+
+            if (Hero.Y <= KillingObject.Y + KillingObject.Height && KillingObject.X + KillingObject.Width / 2 >= Hero.X && KillingObject.X <= Hero.X + Hero.Width)
+            {
+                KillingObject.Y -= (int)KillingObject.Velocity;
+
+                KillingObject.Paint();
+
+                GameOver();
+            }
+            else
+            {
+                KillingObject.Paint();
+
+                if (KillingObject.Y + KillingObject.Height >= Height)
                 {
-                    KillingObject.Y -= (int)KillingObject.Velocity;
+                    KillingObject.Clear();
 
-                    KillingObject.Paint();
-
-                    GameOver();
-                }
-                else
-                {
-                    KillingObject.Paint();
-
-                    if (KillingObject.Y + KillingObject.Height >= g.ClipBounds.Height)
-                    {
-                        KillingObject.Clear();
-                    }
+                    KillingObject = null;
                 }
             }
         }
@@ -101,6 +144,10 @@
                 {
                     KillingObject = new KillingObject(brick.X, brick.Y + brick.Height, g);
                 }
+                else if (brick is GreenBrick)
+                {
+                    SpeedingObject = new SpeedingObject(brick.X, brick.Y + brick.Height, g);
+                }
             }
         }
 
@@ -122,6 +169,10 @@
             Bricks.RemoveAt(2);
             Bricks.Add(new RedBrick(2 * (BrickWidth + BetweenBrickDistance),
                                                      0 * (BrickHeight + BetweenBrickDistance)));
+
+            Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
+            Bricks.Add(new GreenBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
+                                               (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
         }
 
         private void Breakman_Paint(object sender, PaintEventArgs e)

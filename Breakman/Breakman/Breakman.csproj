@@ -55,12 +55,14 @@
     </Compile>
     <Compile Include="BrickBase.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="GreenBrick.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="KillingObject.cs" />
     <Compile Include="NormalBrick.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedBrick.cs" />
+    <Compile Include="SpeedingObject.cs" />
     <EmbeddedResource Include="Breakman.resx">
       <DependentUpon>Breakman.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,10 +92,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\images.png" />
+    <None Include="Resources\Sword.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Sword.png" />
+    <None Include="Resources\SpeedUp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
