@@ -4,6 +4,7 @@
     using System.Windows.Forms;
     using Breakman;
     using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
 
     public partial class BreakmanStartup : Form
     {
@@ -35,7 +36,7 @@
 
             BreakmanForm.Show();
 
-            Hide();            
+            Hide();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -55,7 +56,28 @@
             }
             else
             {
-                MessageBox.Show("No saved game present!", "No saved game present!", MessageBoxButtons.OK);
+                MessageBox.Show("No saved game present!");
+            }
+        }
+
+        private void btnRecordScores_Click(object sender, EventArgs e)
+        {
+            int savedPoints;
+
+            if (File.Exists("points.bin"))
+            {
+                using (FileStream stream = File.OpenRead("points.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    savedPoints = (int)bf.Deserialize(stream);
+
+                    MessageBox.Show($"Current best score is: {savedPoints}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No record score made yet.");
             }
         }
     }

@@ -34,6 +34,7 @@
         public List<BrickBase> Bricks { get; set; }
         public KillingObject KillingObject { get; set; }
         public SpeedingObject SpeedingObject { get; set; }
+        public int Points { get; set; } = 0;
 
         private Timer BallTimer { get; set; }
         private Timer FallingObjectsTimer { get; set; }
@@ -69,7 +70,7 @@
         {
             Level = level;
 
-            NumberOfRows = 1 * Level;
+            NumberOfRows = 2 * Level + 1;
 
             Hero = new Hero();
 
@@ -114,6 +115,11 @@
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 savedBall = (Ball)bf.Deserialize(str);
+            }
+            using (FileStream str = File.OpenRead("points.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                Points = (int)bf.Deserialize(str);
             }
 
             if (File.Exists("killingobject.bin"))
@@ -191,6 +197,13 @@
                 bf.Serialize(stream, Ball);
             }
 
+            using (FileStream stream = File.Create("points.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                bf.Serialize(stream, Points);
+            }
+
             if (KillingObject != null)
             {
                 using (FileStream stream = File.Create("killingobject.bin"))
@@ -214,7 +227,11 @@
         private void GameOver()
         {
             StopTimers();
-            DialogResult gameOver = MessageBox.Show("You lost!", "Game Over!", MessageBoxButtons.OK);
+
+            DialogResult gameOver = MessageBox.Show("You lost!", "Game Over!");
+
+            CheckNewRecord();
+
             Close();
         }
 
@@ -244,6 +261,8 @@
 
                 ReleaseFallingObjects(g, removedBricks);
 
+                lblPoints.Text = $"{Points}";
+
                 Ball.Paint(g);
             }
             catch
@@ -272,6 +291,8 @@
                     StopTimers();
 
                     DialogResult gameWin = MessageBox.Show("YOU WIN!", "YOU WIN!", MessageBoxButtons.OK);
+
+                    CheckNewRecord();
 
                     IsClosed = true;
 
@@ -333,13 +354,15 @@
         {
             foreach (BrickBase brick in removedBricks)
             {
+                Points++;
+
                 if (brick is RedBrick)
                 {
                     KillingObject = new KillingObject(brick.X, brick.Y + brick.Height, g);
                 }
                 else if (brick is GreenBrick)
                 {
-                    SpeedingObject = new SpeedingObject(brick.X, brick.Y + brick.Height, g);
+                    SpeedingObject = new SpeedingObject(brick.X, brick.Y + brick.Height, g);                   
                 }
             }
         }
@@ -362,6 +385,8 @@
                 SpeedingObject.Paint();
 
                 SpeedUpHero();
+
+                Points += 5;
 
                 SpeedingObject.Clear();
 
@@ -395,6 +420,8 @@
             {
                 KillingObject.Y -= (int)KillingObject.Velocity;
 
+                Points -= 5;
+
                 KillingObject.Paint();
 
                 if (!IsClosed)
@@ -411,6 +438,42 @@
                     KillingObject.Clear();
 
                     KillingObject = null;
+                }
+            }
+        }
+
+        private void CheckNewRecord()
+        {
+            int savedPoints;
+
+            if (File.Exists("points.bin"))
+            {
+                using (FileStream stream = File.OpenRead("points.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    savedPoints = (int)bf.Deserialize(stream);
+                }
+
+                if (Points > savedPoints)
+                {
+                    MessageBox.Show("You have made a new record!", "Congratulations!");
+
+                    using (FileStream stream = File.Create("points.bin"))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+
+                        bf.Serialize(stream, Points);
+                    }
+                }
+            }
+            else
+            {
+                using (FileStream stream = File.Create("points.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    bf.Serialize(stream, Points);
                 }
             }
         }

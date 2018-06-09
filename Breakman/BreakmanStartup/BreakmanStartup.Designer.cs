@@ -50,7 +50,7 @@
             this.btnExit.BackColor = System.Drawing.Color.Goldenrod;
             this.btnExit.Font = new System.Drawing.Font("Constantia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.ForeColor = System.Drawing.Color.MediumBlue;
-            this.btnExit.Location = new System.Drawing.Point(237, 405);
+            this.btnExit.Location = new System.Drawing.Point(237, 435);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(332, 44);
             this.btnExit.TabIndex = 7;
@@ -63,19 +63,20 @@
             this.btnRecordScores.BackColor = System.Drawing.Color.Goldenrod;
             this.btnRecordScores.Font = new System.Drawing.Font("Constantia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRecordScores.ForeColor = System.Drawing.Color.MediumBlue;
-            this.btnRecordScores.Location = new System.Drawing.Point(237, 335);
+            this.btnRecordScores.Location = new System.Drawing.Point(237, 361);
             this.btnRecordScores.Name = "btnRecordScores";
             this.btnRecordScores.Size = new System.Drawing.Size(332, 44);
             this.btnRecordScores.TabIndex = 6;
-            this.btnRecordScores.Text = "See record scores";
+            this.btnRecordScores.Text = "Check record score";
             this.btnRecordScores.UseVisualStyleBackColor = false;
+            this.btnRecordScores.Click += new System.EventHandler(this.btnRecordScores_Click);
             // 
             // btnContinueSavedGame
             // 
             this.btnContinueSavedGame.BackColor = System.Drawing.Color.Goldenrod;
             this.btnContinueSavedGame.Font = new System.Drawing.Font("Constantia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnContinueSavedGame.ForeColor = System.Drawing.Color.MediumBlue;
-            this.btnContinueSavedGame.Location = new System.Drawing.Point(237, 268);
+            this.btnContinueSavedGame.Location = new System.Drawing.Point(237, 287);
             this.btnContinueSavedGame.Name = "btnContinueSavedGame";
             this.btnContinueSavedGame.Size = new System.Drawing.Size(332, 44);
             this.btnContinueSavedGame.TabIndex = 5;
@@ -88,7 +89,7 @@
             this.btnNewGame.BackColor = System.Drawing.Color.Goldenrod;
             this.btnNewGame.Font = new System.Drawing.Font("Constantia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewGame.ForeColor = System.Drawing.Color.MediumBlue;
-            this.btnNewGame.Location = new System.Drawing.Point(237, 200);
+            this.btnNewGame.Location = new System.Drawing.Point(237, 215);
             this.btnNewGame.Name = "btnNewGame";
             this.btnNewGame.Size = new System.Drawing.Size(332, 44);
             this.btnNewGame.TabIndex = 4;
