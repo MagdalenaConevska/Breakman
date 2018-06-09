@@ -54,7 +54,7 @@
         {
             Level = level;
 
-            NumberOfRows = 2 * Level;
+            NumberOfRows = 3 * Level;
 
             Hero = new Hero();
 
@@ -188,7 +188,7 @@
 
                 SpeedingObject.Clear();
 
-                SpeedingObject.Invalidate();
+                SpeedingObject = null;
             }
             else
             {
@@ -198,7 +198,7 @@
                 {
                     SpeedingObject.Clear();
 
-                    SpeedingObject.Invalidate();
+                    SpeedingObject = null;
                 }
             }
         }
@@ -230,7 +230,7 @@
                 {
                     KillingObject.Clear();
 
-                    KillingObject.Invalidate();
+                    KillingObject = null;
                 }
             }
         }
