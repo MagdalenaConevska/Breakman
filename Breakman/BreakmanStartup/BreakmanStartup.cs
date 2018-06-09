@@ -8,7 +8,7 @@
 
     public partial class BreakmanStartup : Form
     {
-        public Breakman BreakmanForm { get; set; }
+        private Breakman BreakmanForm { get; set; }
 
         private Timer CheckBreakmanForm { get; set; }
 

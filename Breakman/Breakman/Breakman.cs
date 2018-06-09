@@ -295,7 +295,7 @@
                 {
                     StopTimers();
 
-                    DialogResult gameWin = MessageBox.Show("YOU WIN!", "YOU WIN!", MessageBoxButtons.OK);
+                    DialogResult gameWin = MessageBox.Show("YOU WIN!");
 
                     CheckNewRecord();
 

@@ -6,10 +6,5 @@
         {
             return fallingObject == null;
         }
-
-        public static void Invalidate(this FallingObject fallingObject)
-        {
-            fallingObject = null;
-        }
     }
 }
