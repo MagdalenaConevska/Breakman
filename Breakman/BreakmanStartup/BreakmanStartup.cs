@@ -80,5 +80,27 @@
                 MessageBox.Show("No record score made yet.");
             }
         }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(string.Format("Breakman is a game where you have to break the bricks above the hero, with his ball. \n" +
+                                          "This is a simple edition of the game and it consists only of two levels. \n" + 
+                                          "Move -> and <- keys on the keyboard in order to move your hero. \n"+
+                                          "If you don't catch your ball when falling down, you lose the game. \n" +
+                                          "Be careful with the falling sword, it kills you. \n" + 
+                                          "Catch the speeding clock because it speeds you up. \n" + 
+                                          "Press S key in order to save the game in the current state, so you can continue playing it later. \n"+
+                                          "ENJOY!"), "About Breakman");
+        }
+
+        private void btnNewGame_MouseHover(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Hand;
+        }
+
+        private void btnNewGame_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Arrow;
+        }
     }
 }

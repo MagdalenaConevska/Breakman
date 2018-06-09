@@ -30,7 +30,7 @@
         {
             Rectangle heroPath = new Rectangle(0, Y, (int)g.ClipBounds.Width, (int)g.ClipBounds.Height);
 
-            Image heroBackground = Resources.Hero;
+            Image heroBackground = Resources.Hero1;
 
             Brush brushClear = new SolidBrush(Color.White);
 

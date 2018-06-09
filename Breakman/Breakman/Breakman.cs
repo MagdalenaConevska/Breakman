@@ -232,6 +232,8 @@
 
             CheckNewRecord();
 
+            IsClosed = true;
+
             Close();
         }
 
@@ -284,6 +286,9 @@
 
                     DialogResult levelFinished = MessageBox.Show("Click OK to continue on next level.", "Level finished!", MessageBoxButtons.OK);
 
+                    KillingObject = null;
+                    SpeedingObject = null;
+
                     StartGame(2);
                 }
                 else
@@ -330,12 +335,12 @@
 
             if (Level == 1)
             {
-                Bricks.RemoveAt(2);
-                Bricks.Add(new GreenBrick(2 * (BrickWidth + BetweenBrickDistance),
+                Bricks.RemoveAt(3);
+                Bricks.Add(new GreenBrick(3 * (BrickWidth + BetweenBrickDistance),
                                                          0 * (BrickHeight + BetweenBrickDistance)));
 
-                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
-                Bricks.Add(new RedBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
+                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 4);
+                Bricks.Add(new RedBrick(5 * (BrickWidth + BetweenBrickDistance),
                                                    (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
             }
             else if (Level == 2)
@@ -344,8 +349,8 @@
                 Bricks.Add(new RedBrick(2 * (BrickWidth + BetweenBrickDistance),
                                                          0 * (BrickHeight + BetweenBrickDistance)));
 
-                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
-                Bricks.Add(new GreenBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
+                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 3);
+                Bricks.Add(new GreenBrick((numberOfBricksInOneRow - 2) * (BrickWidth + BetweenBrickDistance),
                                                    (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
             }
         }
