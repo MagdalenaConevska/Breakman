@@ -38,6 +38,7 @@
             this.ClientSize = new System.Drawing.Size(824, 561);
             this.Name = "Breakman";
             this.Text = "Breakman";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Breakman_FormClosing);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Breakman_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Breakman_KeyDown);
             this.ResumeLayout(false);

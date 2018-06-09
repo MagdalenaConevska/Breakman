@@ -51,9 +51,7 @@
             }
             if (CheckDownBorder(nextY, formHeight) && !IsCatchedByTheHero(nextX, nextY, hero))
             {
-                timer.Stop();
-                timer.Dispose();
-                DialogResult gameOver = MessageBox.Show("Game over", "", MessageBoxButtons.OKCancel);
+                throw new InvalidOperationException();
             }
 
             List<BrickBase> removedBricks = RemoveTouchedBricks(g, bricks, nextX, nextY);
