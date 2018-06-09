@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Windows.Forms;
 
+    [Serializable]
     public class Ball
     {
         public int R { get; set; }

@@ -81,6 +81,7 @@
             this.btnContinueSavedGame.TabIndex = 5;
             this.btnContinueSavedGame.Text = "Continue saved game";
             this.btnContinueSavedGame.UseVisualStyleBackColor = false;
+            this.btnContinueSavedGame.Click += new System.EventHandler(this.btnContinueSavedGame_Click);
             // 
             // btnNewGame
             // 

@@ -1,8 +1,9 @@
 ﻿namespace Breakman
 {
-    using Properties;
+    using System;
     using System.Drawing;
 
+    [Serializable]
     public class BrickBase
     {
         private const int BrickWidth = 100;

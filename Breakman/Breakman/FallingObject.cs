@@ -1,12 +1,15 @@
 ﻿namespace Breakman
 {
+    using System;
     using System.Drawing;
 
+    [Serializable]
     public class FallingObject
     {
         private const int BrickWidth = 50;
         private const int BrickHeight = 55;
 
+        [NonSerialized]
         public Graphics Canvas;
 
         public int X { get; set; }

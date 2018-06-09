@@ -2,7 +2,9 @@
 {
     using Properties;
     using System.Drawing;
+    using System;
 
+    [Serializable]
     public class Hero
     {
         public int X { get; set; }

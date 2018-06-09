@@ -1,8 +1,10 @@
 ﻿namespace Breakman
 {
     using Properties;
+    using System;
     using System.Drawing;
 
+    [Serializable]
     public class KillingObject :  FallingObject
     {
         private const float KillingObjectVelocity = 10;

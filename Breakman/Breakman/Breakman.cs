@@ -5,7 +5,9 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
     using System.Windows.Forms;
 
     #endregion
@@ -40,11 +42,23 @@
 
         #region FormCtors
 
-        public Breakman()
+        public Breakman(bool openSavedGame)
         {
             InitializeComponent();
 
-            StartGame(1);
+            if (openSavedGame)
+            {
+                OpenSavedGame();
+            }
+            else
+            {
+                StartGame(1);
+            }
+        }
+
+        public Breakman()
+        {
+            InitializeComponent();
         }
 
         #endregion
@@ -80,10 +94,127 @@
             FallingObjectsTimer.Start();
         }
 
+        public void OpenSavedGame()
+        {
+            List<BrickBase> savedBricks = null;
+            Hero savedHero = null;
+            Ball savedBall = null;
+
+            using (FileStream str = File.OpenRead("bricks.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                savedBricks = (List<BrickBase>)bf.Deserialize(str);
+            }
+            using (FileStream str = File.OpenRead("hero.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                savedHero = (Hero)bf.Deserialize(str);
+            }
+            using (FileStream str = File.OpenRead("ball.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                savedBall = (Ball)bf.Deserialize(str);
+            }
+
+            if (File.Exists("killingobject.bin"))
+            {
+                using (FileStream str = File.OpenRead("killingobject.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    KillingObject = (KillingObject)bf.Deserialize(str);
+                    KillingObject.Canvas = CreateGraphics();
+                }
+            }
+            if (File.Exists("speedingobject.bin"))
+            {
+                using (FileStream str = File.OpenRead("speedingobject.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    SpeedingObject = (SpeedingObject)bf.Deserialize(str);
+                    SpeedingObject.Canvas = CreateGraphics();
+                }
+            }
+
+            Hero = savedHero;
+
+            Ball = savedBall;
+
+            Bricks = new List<BrickBase>();
+
+            savedBricks.ForEach(f => Bricks.Add(f));
+
+            Invalidate();
+
+            BallTimer = new Timer();
+            BallTimer.Tick += BallTimer_Tick;
+            BallTimer.Enabled = true;
+            BallTimer.Interval = BallAndFallingObjectsTimerInterval;
+            BallTimer.Start();
+
+            FallingObjectsTimer = new Timer();
+            FallingObjectsTimer.Tick += FallingObjectTimer_Tick;
+            FallingObjectsTimer.Enabled = true;
+            FallingObjectsTimer.Interval = BallAndFallingObjectsTimerInterval;
+            FallingObjectsTimer.Start();
+        }
+
+        private void SaveGame()
+        {
+            if (File.Exists("killingobject.bin"))
+            {
+                File.Delete("killingobject.bin");
+            }
+
+            if (File.Exists("speedingobject.bin"))
+            {
+                File.Delete("speedingobject.bin");
+            }
+
+            using (FileStream stream = File.Create("bricks.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                bf.Serialize(stream, Bricks);
+            }
+
+            using (FileStream stream = File.Create("hero.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                bf.Serialize(stream, Hero);
+            }
+
+            using (FileStream stream = File.Create("ball.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                bf.Serialize(stream, Ball);
+            }
+
+            if (KillingObject != null)
+            {
+                using (FileStream stream = File.Create("killingobject.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    bf.Serialize(stream, KillingObject);
+                }
+            }
+            if (SpeedingObject != null)
+            {
+                using (FileStream stream = File.Create("speedingobject.bin"))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    bf.Serialize(stream, SpeedingObject);
+                }
+            }
+        }
+
         private void GameOver()
         {
             StopTimers();
-            DialogResult gameOver = MessageBox.Show("Sorry, you lost!", "Game Over!", MessageBoxButtons.OK);
+            DialogResult gameOver = MessageBox.Show("You lost!", "Game Over!", MessageBoxButtons.OK);
             Close();
         }
 
@@ -330,6 +461,12 @@
             else if (e.KeyCode == Keys.Right)
             {
                 Hero.Move(Width, Direction.Right);
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                SaveGame();
+
+                MessageBox.Show("Game has been saved!");
             }
 
             Hero.Paint(g);

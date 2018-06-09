@@ -1,8 +1,10 @@
 ﻿namespace Breakman
 {
     using Properties;
+    using System;
     using System.Drawing;
 
+    [Serializable]
     public class SpeedingObject :  FallingObject
     {
         private const float SpeedingObjectVelocity = 10;
