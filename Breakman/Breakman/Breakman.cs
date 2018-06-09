@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     #endregion
@@ -54,7 +55,7 @@
         {
             Level = level;
 
-            NumberOfRows = 3 * Level;
+            NumberOfRows = 1 * Level;
 
             Hero = new Hero();
 
@@ -63,6 +64,8 @@
             Bricks = new List<BrickBase>();
 
             InitBricks();
+
+            Invalidate();
 
             BallTimer = new Timer();
             BallTimer.Tick += BallTimer_Tick;
@@ -106,13 +109,43 @@
             {
                 List<BrickBase> removedBricks = Ball.Move(Width, Height, Hero, Bricks, g, BallTimer);
 
+                CheckLeftBricksNumber();
+
                 ReleaseFallingObjects(g, removedBricks);
 
                 Ball.Paint(g);
             }
             catch
             {
-                GameOver();
+                if (!IsClosed)
+                {
+                    GameOver();
+                }
+            }
+        }
+
+        private void CheckLeftBricksNumber()
+        {
+            if (!Bricks.Any())
+            {
+                if (Level == 1)
+                {
+                    StopTimers();
+
+                    DialogResult levelFinished = MessageBox.Show("Click OK to continue on next level.", "Level finished!", MessageBoxButtons.OK);
+
+                    StartGame(2);
+                }
+                else
+                {
+                    StopTimers();
+
+                    DialogResult gameWin = MessageBox.Show("YOU WIN!", "YOU WIN!", MessageBoxButtons.OK);
+
+                    IsClosed = true;
+
+                    Close();
+                }
             }
         }
 
@@ -143,13 +176,26 @@
                 }
             }
 
-            Bricks.RemoveAt(2);
-            Bricks.Add(new RedBrick(2 * (BrickWidth + BetweenBrickDistance),
-                                                     0 * (BrickHeight + BetweenBrickDistance)));
+            if (Level == 1)
+            {
+                Bricks.RemoveAt(2);
+                Bricks.Add(new GreenBrick(2 * (BrickWidth + BetweenBrickDistance),
+                                                         0 * (BrickHeight + BetweenBrickDistance)));
 
-            Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
-            Bricks.Add(new GreenBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
-                                               (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
+                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
+                Bricks.Add(new RedBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
+                                                   (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
+            }
+            else if (Level == 2)
+            {
+                Bricks.RemoveAt(2);
+                Bricks.Add(new RedBrick(2 * (BrickWidth + BetweenBrickDistance),
+                                                         0 * (BrickHeight + BetweenBrickDistance)));
+
+                Bricks.RemoveAt(numberOfBricksInOneRow * NumberOfRows - 2);
+                Bricks.Add(new GreenBrick((numberOfBricksInOneRow - 1) * (BrickWidth + BetweenBrickDistance),
+                                                   (NumberOfRows - 1) * (BrickHeight + BetweenBrickDistance)));
+            }
         }
 
         private void ReleaseFallingObjects(Graphics g, List<BrickBase> removedBricks)
@@ -220,7 +266,10 @@
 
                 KillingObject.Paint();
 
-                GameOver();
+                if (!IsClosed)
+                {
+                    GameOver();
+                }
             }
             else
             {

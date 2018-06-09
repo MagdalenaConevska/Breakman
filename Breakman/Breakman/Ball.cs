@@ -115,7 +115,7 @@
         {
             Brush brush = new SolidBrush(Color.White);
 
-            g.FillEllipse(brush, X, Y, R * 2, R * 2);
+            g.FillRectangle(brush, X, Y, R * 2, R * 2);
 
             brush.Dispose();
         }
