@@ -76,7 +76,7 @@ RedBrick, GreenBrick и NormalBrick наследуваат од класата B
 
 # Изглед на играта преку слики
 
-![Главно мени]https://github.com/MagdalenaConevska/Breakman/blob/master/breakmanstartup.png)
+![Главно мени](https://github.com/MagdalenaConevska/Breakman/blob/master/breakmanstartup.png)
 
 ![Прва стаза](https://github.com/MagdalenaConevska/Breakman/blob/master/firstlevelstarted.png)
 
